@@ -32,9 +32,8 @@ jobs:
       - name: Compile
         run: |
           export PICO_SDK_PATH=pico-sdk
-          mkdir build
-          cd build
-          cmake ..
+          cmake -B build -G "Unix Makefiles" -DPICO_BOARD=pico -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -- -j $(nproc)
           make
           ls -lh
 
