@@ -1,0 +1,47 @@
+name: sigrok-pico
+on:
+  push:
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Build sigrok-pico
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Checkout pico-sdk
+        uses: actions/checkout@v4
+        with:
+          repository: raspberrypi/pico-sdk
+          path: pico-sdk
+          ref: 2.1.1
+          fetch-depth: 1
+
+      - name: Install dependencies
+        run: sudo apt install gdb-multiarch cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib cmake
+
+      - name: Compile
+        run: |
+          export PICO_SDK_PATH=pico-sdk
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ls -lh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sigrok-pico
+          path: |
+            build/sigrok-pico.uf2
+            build/sigrok-pico.elf
