@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 1
 
       - name: Install dependencies
-        run: sudo apt install gdb-multiarch cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib cmake
+        run: sudo apt install gdb-multiarch cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib libusb-1.0-0-dev
 
       - name: Compile
         run: |
