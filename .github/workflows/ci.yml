@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 1
 
       - name: Install dependencies
-        run: sudo apt install gdb-multiarch cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib libusb-1.0-0-dev git
+        run: sudo apt install gdb-multiarch cmake gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib git
 
       - name: Compile
         run: |
@@ -40,11 +40,16 @@ jobs:
           cd build
           make
           ls -lh
+          cd ..
+          cp build/pico_sdk_sigrok.uf2 sigrok-pico.uf2
+          cp build/pico_sdk_sigrok.elf sigrok-pico.elf
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: sigrok-pico
           path: |
-            build/pico_sdk_sigrok.uf2
-            build/pico_sdk_sigrok.elf
+            sigrok-pico.uf2
+            sigrok-pico.elf
+            LICENSE
+            README.md

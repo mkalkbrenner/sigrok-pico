@@ -33,10 +33,6 @@ pico_enable_stdio_uart(pico_sdk_sigrok 0)
 
 pico_add_extra_outputs(pico_sdk_sigrok)
 
-target_include_directories(pico_sdk_sigrok PRIVATE
-    ${PICO_SDK_PATH}/lib/tinyusb/src
-)
-
 target_link_libraries(
     pico_sdk_sigrok
     pico_stdlib
